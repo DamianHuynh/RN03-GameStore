@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Text} from '../../../components';
 
 export default class GameItem extends Component {
   render() {
-    const {gameItem} = this.props;
+    const {gameItem, onPress} = this.props;
     return (
-      <View>
+      <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
         <Image source={{uri: gameItem.preview[0]}} style={styles.banner} />
         <View
           style={[
@@ -15,11 +15,11 @@ export default class GameItem extends Component {
           ]}>
           <Image source={{uri: gameItem.icon}} style={styles.icon} />
           <View style={styles.gameInfoContent}>
-            <Text>{gameItem.title}</Text>
-            <Text>{gameItem.subTitle}</Text>
+            <Text title>{gameItem.title}</Text>
+            <Text subTitle>{gameItem.subTitle}</Text>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

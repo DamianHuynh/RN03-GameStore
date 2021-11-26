@@ -1,14 +1,31 @@
 import React, {Component} from 'react';
-import {Text as RNText} from 'react-native';
+import {StyleSheet, Text as RNText} from 'react-native';
 import {COLORS} from '../../themes/styles';
 
 export default class Text extends Component {
   render() {
-    const {color = COLORS.white, children, style} = this.props;
+    const {color = COLORS.white, children, style, title, subTitle} = this.props;
     return (
-      <RNText {...this.props} style={[style, {color}]}>
+      <RNText
+        {...this.props}
+        style={[
+          style,
+          title && styles.title,
+          subTitle && styles.subTitle,
+          {color},
+        ]}>
         {children}
       </RNText>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: '600',
+  },
+  subTitle: {
+    fontSize: 12,
+    opacity: 0.55,
+  },
+});
