@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {View, Image, FlatList} from 'react-native';
+import {getListGame} from '../../api';
 import {BackgroundView, Text} from '../../components';
 import {mapIP} from '../../utils/common';
+import {screenName} from '../../utils/constant';
 import GameItem from './components/GameItem';
 import styles from './styles';
 
@@ -15,14 +17,9 @@ export default class HomeScreen extends Component {
 
   componentDidMount() {
     //10.0.2.2
-    axios({method: 'GET', url: 'http://localhost:3000/games'})
+    getListGame()
       .then(result => {
         const listGame = mapIP(result.data);
-        // const icon = gameDetail.icon.replace('localhost', '10.0.2.2');
-        // const preview = gameDetail.preview.map(item =>
-        //   item.replace('localhost', '10.0.2.2'),
-        // );
-        console.log('gameDetail Change IP', listGame);
         this.setState({listGame, loading: false});
       })
       .catch(err => {
@@ -32,9 +29,10 @@ export default class HomeScreen extends Component {
   }
 
   render() {
+    const {navigation} = this.props;
     const {listGame, loading} = this.state;
     return (
-      <BackgroundView>
+      <BackgroundView edges={['top']}>
         {!loading && (
           <>
             <View style={styles.headerContainer}>
@@ -49,7 +47,15 @@ export default class HomeScreen extends Component {
 
             <FlatList
               data={listGame}
-              renderItem={({item}) => <GameItem gameItem={item} />}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => (
+                <GameItem
+                  gameItem={item}
+                  onPress={() =>
+                    navigation.navigate(screenName.detail, {id: item.id})
+                  }
+                />
+              )}
               ItemSeparatorComponent={() => <View style={{height: 70}} />}
               contentContainerStyle={{paddingBottom: 100}}
             />

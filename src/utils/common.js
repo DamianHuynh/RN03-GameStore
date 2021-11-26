@@ -20,3 +20,11 @@ export const mapIP = result => {
   }
   return result;
 };
+
+export const detectUrlByPlatform = () => {
+  let baseUrl = 'http://localhost:3000';
+  if (Platform.OS === 'android') {
+    baseUrl = 'http://10.0.2.2:3000';
+  }
+  return baseUrl;
+};
