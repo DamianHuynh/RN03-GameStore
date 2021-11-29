@@ -11,9 +11,17 @@ import {screenName} from '../utils/constant';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {COLORS} from '../themes/styles';
 import {View, StyleSheet} from 'react-native';
+import {createNavigationContainerRef} from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+export const navigationRef = createNavigationContainerRef();
+
+export const navigate = (name, params) => {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name, params);
+  }
+};
 
 const screenOptions = ({route}) => {
   return {
@@ -26,7 +34,7 @@ const screenOptions = ({route}) => {
     tabBarIcon: ({focused}) => {
       let iconName;
       const backgroundColor = focused ? COLORS.lightPurple : 'transparent';
-      if (route.name === screenName.home) {
+      if (route.name === screenName.HomeTab) {
         iconName = 'home';
       } else if (route.name === screenName.stream) {
         iconName = 'game-controller';
