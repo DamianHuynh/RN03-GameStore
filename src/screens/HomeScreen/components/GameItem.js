@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Text} from '../../../components';
+import {navigate} from '../../../navigation/root-navigation';
+import {screenName} from '../../../utils/constant';
 
 export default class GameItem extends Component {
   render() {
-    const {gameItem, onPress} = this.props;
+    const {gameItem} = this.props;
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigate(screenName.detail, {id: gameItem.id})}>
         <Image source={{uri: gameItem.preview[0]}} style={styles.banner} />
         <View
           style={[
