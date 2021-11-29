@@ -1,34 +1,14 @@
-import axios from 'axios';
 import React, {Component} from 'react';
-import {View, Image, FlatList} from 'react-native';
+import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
-import {getListGame} from '../../api';
 import {BackgroundView, Text} from '../../components';
-import {
-  getRequest,
-  getRequestFail,
-  getRequestSuccess,
-  setListGame,
-} from '../../redux/actions/gameActions';
-import {mapIP} from '../../utils/common';
-import {screenName} from '../../utils/constant';
+import {getRequestListGame} from '../../redux/thunk/gameThunkAction';
 import GameItem from './components/GameItem';
 import styles from './styles';
 
 class HomeScreen extends Component {
   componentDidMount() {
-    //10.0.2.2
-    this.props.getRequest();
-    getListGame()
-      .then(result => {
-        const listGame = mapIP(result.data);
-        this.props.setListGame(listGame);
-        this.props.getRequestSuccess();
-      })
-      .catch(err => {
-        console.log(err);
-        this.props.getRequestFail();
-      });
+    this.props.getRequestListGame();
   }
 
   render() {
@@ -58,10 +38,7 @@ class HomeScreen extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setListGame: listGame => dispatch(setListGame(listGame)),
-  getRequest: () => dispatch(getRequest()),
-  getRequestSuccess: () => dispatch(getRequestSuccess()),
-  getRequestFail: () => dispatch(getRequestFail()),
+  getRequestListGame: () => dispatch(getRequestListGame()),
 });
 
 const mapStatesToProps = state => ({

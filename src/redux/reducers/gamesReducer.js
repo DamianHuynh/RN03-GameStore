@@ -1,9 +1,9 @@
 import {
   FETCHING_DATA,
-  FETCHING_DATA_FAIL,
-  FETCHING_DATA_SUCCESS,
-  SET_GAME_DETAIL,
-  SET_LIST_GAME,
+  GET_GAME_DETAIL_FAIL,
+  GET_GAME_DETAIL_SUCCESS,
+  GET_LIST_GAME_FAIL,
+  GET_LIST_GAME_SUCCESS,
 } from '../actions/gameActions';
 
 const initialState = {
@@ -16,18 +16,18 @@ const gameReducer = (state = initialState, {type, payload}) => {
   switch (type) {
     case FETCHING_DATA:
       return {...state, isFetching: true};
-    case FETCHING_DATA_SUCCESS:
+    case GET_LIST_GAME_SUCCESS:
+      // state.listGame = payload;
+      // return {...state};
+      return {...state, listGame: payload, isFetching: false};
+    case GET_LIST_GAME_FAIL:
       return {...state, isFetching: false};
-    case FETCHING_DATA_FAIL:
-      return {...state, isFetching: false};
-    case SET_LIST_GAME:
-      state.listGame = payload;
-      return {...state};
-    //return {...state, listGame: payload};
 
-    case SET_GAME_DETAIL:
-      // console.log(payload);
-      return {...state, gameDetail: payload};
+    case GET_GAME_DETAIL_SUCCESS:
+      console.log(payload);
+      return {...state, gameDetail: payload, isFetching: false};
+    case GET_GAME_DETAIL_FAIL:
+      return {...state, isFetching: false};
 
     default:
       return state;
