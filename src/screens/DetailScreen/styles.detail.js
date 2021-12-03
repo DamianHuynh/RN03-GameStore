@@ -40,7 +40,6 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
   },
   topInfoTextContent: {
     width: '60%',
