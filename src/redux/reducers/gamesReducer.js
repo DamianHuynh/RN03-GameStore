@@ -19,12 +19,12 @@ const gameReducer = (state = initialState, {type, payload}) => {
     case GET_LIST_GAME_SUCCESS:
       // state.listGame = payload;
       // return {...state};
+      // console.log(GET_LIST_GAME_SUCCESS, payload);
       return {...state, listGame: payload, isFetching: false};
     case GET_LIST_GAME_FAIL:
       return {...state, isFetching: false};
 
     case GET_GAME_DETAIL_SUCCESS:
-      console.log(payload);
       return {...state, gameDetail: payload, isFetching: false};
     case GET_GAME_DETAIL_FAIL:
       return {...state, isFetching: false};

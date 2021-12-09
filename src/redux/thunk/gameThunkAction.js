@@ -14,7 +14,9 @@ export const getRequestListGame = () => {
     getListGame()
       .then(res => {
         const listGame = mapIP(res.data);
-        dispatch(getListGameSuccess(listGame));
+        setTimeout(() => {
+          dispatch(getListGameSuccess(listGame));
+        }, 5000);
       })
       .catch(error => {
         dispatch(getListGameFail());
@@ -25,10 +27,13 @@ export const getRequestListGame = () => {
 
 export const getRequestGameById = id => {
   return async dispatch => {
+    dispatch(getRequest());
     try {
       const res = await getGameById(id);
       const game = mapIP(res.data);
-      dispatch(getGameDetailSuccess(game));
+      setTimeout(() => {
+        dispatch(getGameDetailSuccess(game));
+      }, 5000);
     } catch (error) {
       console.log(error);
       dispatch(getGameDetailFail());

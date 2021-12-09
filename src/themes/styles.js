@@ -6,5 +6,7 @@ export const COLORS = {
   white: '#ffffff',
   black: '#000000',
   gray: '#bbbbbb',
+  darkGray: '#404040',
   opacityBlack: 'rgba(0,0,0,0.5)',
+  opacityWhite: 'rgba(255,255,255,0.5)',
 };
