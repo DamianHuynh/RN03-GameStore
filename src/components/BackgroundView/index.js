@@ -5,9 +5,9 @@ import {COLORS} from '../../themes/styles';
 
 export default class BackgroundView extends Component {
   render() {
-    const {edges} = this.props;
+    const {edges, style} = this.props;
     return (
-      <SafeAreaView style={styles.container} edges={edges}>
+      <SafeAreaView style={[styles.container, style]} edges={edges}>
         <StatusBar barStyle="light-content" />
         {this.props.children}
       </SafeAreaView>

@@ -1,19 +1,31 @@
 import React, {Component, useEffect} from 'react';
-import {FlatList, View} from 'react-native';
-import {connect} from 'react-redux';
+import {ActivityIndicator, FlatList, View} from 'react-native';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {BackgroundView, Text} from '../../components';
+import withLoading from '../../HOC/withLoading';
+import {
+  getIsFetchSelector,
+  getListGameSelector,
+} from '../../redux/selectors/gameSelector';
 import {getRequestListGame} from '../../redux/thunk/gameThunkAction';
+import {COLORS} from '../../themes/styles';
 import GameItem from './components/GameItem';
 import styles from './styles';
 
-const HomeScreen = ({listGame, getRequestListGame}) => {
+const BackgroundViewLoading = withLoading(BackgroundView);
+
+const HomeScreen = () => {
+  const dispatch = useDispatch();
+  const listGame = useSelector(getListGameSelector);
+  const isFetching = useSelector(getIsFetchSelector);
+
   useEffect(() => {
     console.log('HomeScreenHook');
-    getRequestListGame();
+    dispatch(getRequestListGame());
   }, []);
 
   return (
-    <BackgroundView edges={['top']}>
+    <BackgroundViewLoading edges={['top']} isFetching={isFetching}>
       <View style={styles.headerContainer}>
         <View>
           <Text style={styles.headerText}>
@@ -23,7 +35,6 @@ const HomeScreen = ({listGame, getRequestListGame}) => {
         </View>
         <View style={styles.avatar} />
       </View>
-
       <FlatList
         data={listGame}
         showsVerticalScrollIndicator={false}
@@ -31,17 +42,8 @@ const HomeScreen = ({listGame, getRequestListGame}) => {
         ItemSeparatorComponent={() => <View style={{height: 70}} />}
         contentContainerStyle={{paddingBottom: 100}}
       />
-    </BackgroundView>
+    </BackgroundViewLoading>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  getRequestListGame: () => dispatch(getRequestListGame()),
-});
-
-const mapStatesToProps = state => ({
-  listGame: state.gameReducer.listGame,
-  isFetching: state.gameReducer.isFetching,
-});
-
-export default connect(mapStatesToProps, mapDispatchToProps)(HomeScreen);
+export default HomeScreen;
